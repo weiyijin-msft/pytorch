@@ -503,8 +503,8 @@ if (NOT INTERN_BUILD_MOBILE OR NOT BUILD_CAFFE2_MOBILE)
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/python_call.cpp
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/python_remote_call.cpp
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/python_resp.cpp
-        ${TORCH_SRC_DIR}/csrc/distributed/rpc/rpc_agent.cpp
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/request_callback.cpp
+        ${TORCH_SRC_DIR}/csrc/distributed/rpc/rpc_agent.cpp
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/rref_proto.cpp
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/script_call.cpp
         ${TORCH_SRC_DIR}/csrc/distributed/rpc/script_remote_call.cpp
