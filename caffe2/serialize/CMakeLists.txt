@@ -1,8 +1,26 @@
 file(GLOB tmp *_test.cc)
 
 set(Caffe2_CPU_TEST_SRCS ${Caffe2_CPU_TEST_SRCS} ${tmp})
+
+CHECK_CXX_COMPILER_FLAG(-mpclmul COMPILER_HAS_M_PCLMUL)
+CHECK_CXX_COMPILER_FLAG(-msse4.2 COMPILER_HAS_M_SSE42)
+if (COMPILER_HAS_M_PCLMUL AND COMPILER_HAS_M_SSE42)
+  set(SSE42_FILES
+      ${PROJECT_SOURCE_DIR}/third_party/miniz-2.0.8/CrcHw.cpp)
+  set_property(
+    SOURCE ${SSE42_FILES}
+    PROPERTY COMPILE_FLAGS
+    "-mpclmul -msse4.2 "
+  )
+  set_property(
+    SOURCE ${PROJECT_SOURCE_DIR}/third_party/miniz-2.0.8/miniz.c
+    APPEND PROPERTY COMPILE_DEFINITIONS
+    "USE_EXTERNAL_MZCRC")
+endif()
+
 list(APPEND Caffe2_CPU_SRCS
   ${PROJECT_SOURCE_DIR}/third_party/miniz-2.0.8/miniz.c
+  ${SSE42_FILES}
   ${CMAKE_CURRENT_SOURCE_DIR}/inline_container.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/istream_adapter.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/file_adapter.cc
